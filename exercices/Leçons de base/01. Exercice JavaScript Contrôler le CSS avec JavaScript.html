@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01. Exercice JavaScript : Contrôler le CSS avec JavaScript</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        width: 1200px;
+        height: auto;
+        padding: 1.5em;
+        margin: 2em auto;
+        color: #232323;
+      }
+
+      #exercises {
+        border:1px solid #ededed;
+        padding: 20px;
+      }
+
+      #exercises h1,
+      #exercises h2,
+      #exercises h3 {
+        text-align: center;
+        margin: 0;
+      }
+
+      #exercises .container {
+        display: flex;
+      }
+
+      #exercises #controller {
+        border-right: 1px solid #ededed;
+      }
+
+      #exercises #controller,
+      #exercises #style-box {
+        width: 50%;
+        margin: 24px 0;
+      }
+
+      #exercises .set {
+        margin: 10px 0;
+      }
+
+      #exercises .set .title {
+        padding: 6px 0;
+        margin: 0;
+      }
+
+      #exercises .set button {
+        padding: 4px;
+        border: 1px solid #c3c3c3;
+        margin-right: 8px;
+        cursor: pointer;
+      }
+
+      #exercises #set-width button:hover,
+      #exercises #set-height button:hover,
+      #exercises #reset button:hover {
+        background-color: #ddd;
+      }
+
+      #exercises #set-color button {
+        border-radius: 50%;
+        border: unset;
+        width: 32px;
+        height: 32px;
+      }
+
+      #exercises #style-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+      }
+      #exercises #controller .desc {
+        margin-bottom: 12px;
+        text-align: center;
+      }
+
+      #exercises #style-box #box {
+        width: 50px;
+        height: 50px;
+        border: 1px solid #c3c3c3;
+        text-align: center;
+        line-height: 50px;
+      }
+
+      #exercises #reset {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      #exercises .red {
+        background-color: #ff8587;
+      }
+
+      #exercises .yellow {
+        background-color: #f6eab3;
+      }
+
+      #exercises .blank {
+        background-color: #25273d;
+        color: #ddd;
+      }
+
+      #exercises .purple {
+        background-color: #6666e2;
+        color: #ddd;
+      }
+
+      #exercises .blue {
+        background-color: #8ae6d3;
+      }
+
+      #exercises .transparent {
+        background-color: transparent;
+        border: 1px solid #c3c3c3 !important;
+      }
+
+      @media (max-width: 600px) {
+        #exercises .container {
+          flex-wrap: wrap;
+        }
+
+        #exercises #controller,
+        #exercises #style-box {
+            width: 100%
+        }
+
+        #exercises #controller {
+            border-right: none;
+            border-bottom: 1px solid #ededed;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="exercises">
+      <h1>Exercice JavaScript : Contrôler le CSS avec JavaScript</h1>
+      <div class="container">
+        <div id="controller">
+          <h2>Contrôleur</h2>
+          <p class="desc">
+            Utilisez un contrôleur pour définir le style de la BOX.
+          </p>
+          <div id="set-color" class="set">
+            <p class="title">Définir la couleur</p>
+            <div class="button-box">
+              <button class="transparent"></button>
+              <button class="red"></button>
+              <button class="yellow"></button>
+              <button class="blank"></button>
+              <button class="purple"></button>
+              <button class="blue"></button>
+            </div>
+          </div>
+          <div id="set-width" class="set">
+            <p class="title">Définir la largeur</p>
+            <div class="button-box">
+              <button data-width="100">100px</button>
+              <button data-width="300">300px</button>
+              <button data-width="500">500px</button>
+            </div>
+          </div>
+          <div id="set-height" class="set">
+            <p class="title">Définir la hauteur</p>
+            <div class="button-box">
+              <button data-height="100">100px</button>
+              <button data-height="200">200px</button>
+              <button data-height="300">300px</button>
+            </div>
+          </div>
+          <div id="reset" class="set">
+            <button class="reset">Réinitialiser</button>
+          </div>
+        </div>
+
+        <div id="style-box">
+          <div id="box">BOX</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Sélection des éléments HTML
+      const EXERCISES = document.querySelector("#exercises");
+      const BOX = EXERCISES.querySelector("#box");
+      const SET_COLOR = EXERCISES.querySelector("#set-color .button-box");
+      const SET_WIDTH = EXERCISES.querySelector("#set-width .button-box");
+      const SET_HEIGHT = EXERCISES.querySelector("#set-height .button-box");
+      const RESET = EXERCISES.querySelector("#reset .reset");
+
+      // Gestionnaire d'événement pour le changement de couleur
+      SET_COLOR.addEventListener("click", function (ev) {
+        BOX.className = ev.target.className;
+      });
+
+      // Gestionnaire d'événement pour le changement de largeur
+      SET_WIDTH.addEventListener("click", function (ev) {
+        BOX.style.width = `${ev.target.dataset.width}px`;
+      });
+
+      // Gestionnaire d'événement pour le changement de hauteur
+      SET_HEIGHT.addEventListener("click", function (ev) {
+        const height = ev.target.dataset.height;
+        BOX.style.cssText += `height: ${height}px; line-height: ${height}px;`;
+      });
+
+      // Gestionnaire d'événement pour la réinitialisation
+      RESET.addEventListener("click", function () {
+        BOX.className = "";
+        BOX.style.cssText = "";
+      });
+    </script>
+  </body>
+</html>

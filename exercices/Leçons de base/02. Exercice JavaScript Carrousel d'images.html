@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>02. Exercice JavaScript : Carrousel d'images</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+            }
+
+            body {
+                width: 1200px;
+                height: auto;
+                padding: 1.5em;
+                margin: 2em auto;
+                color: #232323;
+            }
+
+            #exercises {
+                padding: 20px;
+            }
+
+            #exercises h1,
+            #exercises h2,
+            #exercises h3 {
+                text-align: center;
+                margin: 0;
+            }
+
+            #exercises .slider-container {
+                position: relative;
+                overflow: hidden;
+                width: 100%;
+                max-width: 512px;
+                margin: 32px auto;
+                padding: 12px 0;
+                border: 1px solid #ededed;
+
+            }
+
+            #exercises .slider {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+            }
+
+            #exercises .slide {
+                width: 100%;
+                max-width: 100%;
+                flex: 0 0 100%;
+                transition: transform .8s ease-in-out;
+                transform: scale(.6);
+            }
+
+            #exercises .slide:first-child {
+                transform: scale(1);
+            }
+
+            #exercises #prev,
+            #exercises #next {
+                cursor: pointer;
+                position: absolute;
+                top: 50%;
+                font-size: 18px;
+                width: 32px;
+                height: 32px;
+            }
+
+            #exercises #prev {
+                left: 10px;
+            }
+
+            #exercises #next {
+                right: 10px;
+            }
+
+            #exercises #info {
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="exercises">
+            <h1>Exercice JavaScript : Carrousel d'images</h1>
+            <div class="slider-container">
+                <div class="slider">
+                    <img class="slide" src="./assets/images/Berger-allemand-icone-512x512.png" alt="Berger Allemand" />
+                    <img class="slide" src="./assets/images/Bouledogue-français-icone-512x512.png"
+                        alt="Bouledogue Français" />
+                    <img class="slide" src="./assets/images/Golden-Retriever-icone-512x512.png" alt="Golden Retriever" />
+                    <img class="slide" src="./assets/images/Husky-de-Sibérie-icone-512x512.png" alt="Husky de Sibérie" />
+                    <img class="slide" src="./assets/images/Shiba-Inu-icone-512x512.png" alt="Shiba Inu" />
+                    <img class="slide" src="./assets/images/Spitz-nain-icone-512x512.png" alt="Spitz nain" />
+                </div>
+                <button id="prev">&lt;</button>
+                <button id="next">&gt;</button>
+                <div id="info"></div>
+            </div>
+        </div>
+        <script>
+            // Initialiser le compteur
+            let count = 0;
+
+            // Obtenir les éléments DOM
+            const EXERCISES = document.querySelector("#exercises");
+            const PREV = EXERCISES.querySelector("#prev");
+            const NEXT = EXERCISES.querySelector("#next");
+            const SLIDER = EXERCISES.querySelector(".slider");
+            const SLIDE = SLIDER.querySelectorAll(".slide");
+            const INFO = EXERCISES.querySelector("#info");
+
+            // Afficher la diapositive à l'index spécifié
+            function showSlider(index) {
+                // Mettre à jour les informations
+                setInfor();
+                // Déplacer le conteneur de la diapositive
+                SLIDER.style.transform = `translateX(${-index * 100}%)`;
+                // Mettre à l'échelle la diapositive actuelle
+                SLIDE[index].style.transform = `scale(1)`;
+            }
+
+            // Passer à la diapositive suivante
+            function nextSlider() {
+                // Incrémenter le compteur
+                count++;
+                // Vérifier s'il dépasse l'index maximum, sinon revenir au début
+                if (count >= SLIDE.length) {
+                    count = 0;
+                }
+                // Afficher la nouvelle diapositive
+                showSlider(count);
+            }
+
+            // Revenir à la diapositive précédente
+            function prevSlider() {
+                // Décrémenter le compteur
+                count--;
+                // Vérifier s'il est inférieur à zéro, sinon revenir à la dernière diapositive
+                if (count < 0) {
+                    count = SLIDE.length - 1;
+                }
+                // Afficher la nouvelle diapositive
+                showSlider(count);
+            }
+
+            // Définir le contenu de la zone d'informations
+            function setInfor() {
+                INFO.innerHTML = `
+            <span class="number">${count + 1} / ${SLIDE.length}</span>
+            | 
+            <span class="title">${SLIDE[count].getAttribute("alt")}</span>
+        `;
+            }
+
+            // Initialiser les informations
+            setInfor();
+
+            // Ajouter des écouteurs d'événements
+            NEXT.addEventListener("click", nextSlider);
+            PREV.addEventListener("click", prevSlider);
+
+        </script>
+    </body>
+</html>
